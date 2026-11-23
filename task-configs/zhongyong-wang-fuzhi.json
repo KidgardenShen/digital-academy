@@ -1,0 +1,16 @@
+{
+  "work_title": "中庸",
+  "edition_title": "四书训义·中庸",
+  "tradition": "训义",
+  "base_witness": null,
+  "commentary_witness": "王夫之《四书训义》中论《中庸》部分，具体底本待指定",
+  "scope": "以指定卷次所收《中庸》训义为界，记录所据经文。",
+  "structure": "依选本卷、篇和训义段落，保留连续论说。",
+  "special_instructions": [
+    "通释一章时建立章节入口。若文字直接解释先前注文，引用该注文。",
+    "依版本证据决定拆分和归属，存疑处列入待核清单。"
+  ],
+  "unresolved": [
+    "核定卷次、经文底本、起讫与页码。"
+  ]
+}

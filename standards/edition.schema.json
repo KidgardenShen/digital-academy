@@ -1,0 +1,936 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yizuoliangwang.example/schemas/edition.schema.json",
+  "title": "一坐两忘经典注疏版本数据",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "data_version",
+    "work",
+    "edition",
+    "sources",
+    "layers",
+    "structure",
+    "text_units",
+    "annotations",
+    "display_groups",
+    "validation"
+  ],
+  "if": { "properties": { "schema_version": { "const": "1.1.0" } }, "required": ["schema_version"] },
+  "then": { "required": ["ai_translations"] },
+  "else": { "properties": { "ai_translations": false } },
+  "properties": {
+    "schema_version": {
+      "enum": ["1.0.0", "1.1.0"]
+    },
+    "ai_translations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/aiTranslation" }
+    },
+    "data_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "work": {
+      "$ref": "#/$defs/work"
+    },
+    "edition": {
+      "$ref": "#/$defs/edition"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/layer"
+      }
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sections"
+      ],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        }
+      }
+    },
+    "text_units": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/textUnit"
+      }
+    },
+    "annotations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/annotation"
+      }
+    },
+    "display_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/displayGroup"
+      }
+    },
+    "validation": {
+      "$ref": "#/$defs/validation"
+    }
+  },
+  "$defs": {
+    "nonblank": { "type": "string", "pattern": "\\S" },
+    "aiTranslation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["section_id", "source_units", "text", "generator", "generation_status", "human_review"],
+      "properties": {
+        "section_id": { "$ref": "#/$defs/nullableString" },
+        "source_units": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["text_id", "source_text"],
+            "properties": {
+              "text_id": { "$ref": "#/$defs/nonblank" },
+              "source_text": { "$ref": "#/$defs/nonblank" }
+            }
+          }
+        },
+        "text": { "$ref": "#/$defs/nonblank" },
+        "generator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "model"],
+          "properties": {
+            "provider": { "$ref": "#/$defs/nonblank" },
+            "model": { "anyOf": [{ "$ref": "#/$defs/nonblank" }, { "type": "null" }] }
+          }
+        },
+        "generation_status": { "enum": ["draft", "generated"] },
+        "human_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reviewer"],
+          "properties": {
+            "status": { "enum": ["pending", "reviewed", "needs_revision"] },
+            "reviewer": { "anyOf": [{ "$ref": "#/$defs/nonblank" }, { "type": "null" }] }
+          },
+          "if": { "properties": { "status": { "const": "pending" } } },
+          "then": { "properties": { "reviewer": { "type": "null" } } },
+          "else": { "properties": { "reviewer": { "$ref": "#/$defs/nonblank" } } }
+        }
+      }
+    },
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "period"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "period": {
+          "$ref": "#/$defs/nullableString"
+        }
+      }
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "volume": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "juan": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "page": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "leaf": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "column": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "line": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "paragraph": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "section": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "note": {
+          "$ref": "#/$defs/nullableString"
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "title",
+        "canonical_title",
+        "parent_work",
+        "language",
+        "script"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "canonical_title": {
+          "type": "string"
+        },
+        "parent_work": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "language": {
+          "type": "string"
+        },
+        "script": {
+          "enum": [
+            "traditional",
+            "simplified",
+            "mixed",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "edition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edition_id",
+        "display_name",
+        "author",
+        "source_title",
+        "edition_kind",
+        "structure_policy",
+        "coverage",
+        "notes"
+      ],
+      "properties": {
+        "edition_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/$defs/person"
+        },
+        "source_title": {
+          "type": "string"
+        },
+        "edition_kind": {
+          "enum": [
+            "commentary_edition",
+            "subcommentary_edition",
+            "exegesis_edition",
+            "collected_commentary",
+            "translation_edition",
+            "other"
+          ]
+        },
+        "structure_policy": {
+          "enum": [
+            "edition_original",
+            "reading_base",
+            "editorial_segmentation"
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "description"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "full_work",
+                "partial"
+              ]
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_title",
+        "source_type",
+        "editor",
+        "publisher",
+        "publication_year",
+        "edition_statement",
+        "locator",
+        "url",
+        "access_date",
+        "rights_note"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string"
+        },
+        "source_title": {
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "print_edition",
+            "manuscript",
+            "facsimile",
+            "digital_transcription",
+            "web_transcription",
+            "other"
+          ]
+        },
+        "editor": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "publisher": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "publication_year": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "edition_statement": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "access_date": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "rights_note": {
+          "$ref": "#/$defs/nullableString"
+        }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "layer_id",
+        "layer_type",
+        "display_name",
+        "author",
+        "work_title",
+        "order",
+        "based_on_layer_id"
+      ],
+      "properties": {
+        "layer_id": {
+          "type": "string"
+        },
+        "layer_type": {
+          "enum": [
+            "base_text",
+            "commentary",
+            "subcommentary",
+            "exegesis",
+            "translation",
+            "editorial",
+            "other"
+          ]
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/$defs/person"
+        },
+        "work_title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "based_on_layer_id": {
+          "$ref": "#/$defs/nullableString"
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section_id",
+        "parent_section_id",
+        "order",
+        "label",
+        "title",
+        "source_locator"
+      ],
+      "properties": {
+        "section_id": {
+          "type": "string"
+        },
+        "parent_section_id": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "label": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/locator"
+        }
+      }
+    },
+    "textUnit": {
+      "$comment": "新制及重制文件的今译使用 role=translation，与经文同章并关联 translation 层。跨记录的交付检查见 DATA_CONTRACT.md。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_id",
+        "section_id",
+        "layer_id",
+        "sequence",
+        "role",
+        "text",
+        "source_id",
+        "source_locator",
+        "transcription_status",
+        "notes"
+      ],
+      "properties": {
+        "text_id": {
+          "type": "string"
+        },
+        "section_id": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "layer_id": {
+          "type": "string"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "role": {
+          "enum": [
+            "classic_text",
+            "preface",
+            "chapter_heading",
+            "quoted_text",
+            "translation",
+            "editorial_text",
+            "other"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "source_id": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "transcription_status": {
+          "enum": [
+            "pending",
+            "transcribed",
+            "collated",
+            "verified"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "textSpanTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "target_ref_id",
+        "text_id",
+        "start_offset",
+        "end_offset",
+        "offset_unit",
+        "quoted_text",
+        "occurrence",
+        "context_before",
+        "context_after"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "text_span"
+        },
+        "target_ref_id": {
+          "type": "string"
+        },
+        "text_id": {
+          "type": "string"
+        },
+        "start_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_offset": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offset_unit": {
+          "const": "utf16_code_unit"
+        },
+        "quoted_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_before": {
+          "type": "string"
+        },
+        "context_after": {
+          "type": "string"
+        }
+      }
+    },
+    "annotationTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "target_ref_id",
+        "annotation_id",
+        "quoted_text"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "annotation"
+        },
+        "target_ref_id": {
+          "type": "string"
+        },
+        "annotation_id": {
+          "type": "string"
+        },
+        "quoted_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "annotationSpanTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "target_ref_id",
+        "annotation_id",
+        "start_offset",
+        "end_offset",
+        "offset_unit",
+        "quoted_text"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "annotation_span"
+        },
+        "target_ref_id": {
+          "type": "string"
+        },
+        "annotation_id": {
+          "type": "string"
+        },
+        "start_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_offset": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offset_unit": {
+          "const": "utf16_code_unit"
+        },
+        "quoted_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "sectionTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "target_ref_id",
+        "section_id"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "section"
+        },
+        "target_ref_id": {
+          "type": "string"
+        },
+        "section_id": {
+          "type": "string"
+        }
+      }
+    },
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "layer_id",
+        "annotation_type",
+        "author",
+        "work_title",
+        "text",
+        "source_id",
+        "source_locator",
+        "target_refs",
+        "review"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string"
+        },
+        "layer_id": {
+          "type": "string"
+        },
+        "annotation_type": {
+          "enum": [
+            "commentary",
+            "subcommentary",
+            "exegesis",
+            "chapter_note",
+            "preface",
+            "editorial_note",
+            "other"
+          ]
+        },
+        "author": {
+          "$ref": "#/$defs/person"
+        },
+        "work_title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_id": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "target_refs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/textSpanTarget"
+              },
+              {
+                "$ref": "#/$defs/annotationTarget"
+              },
+              {
+                "$ref": "#/$defs/annotationSpanTarget"
+              },
+              {
+                "$ref": "#/$defs/sectionTarget"
+              }
+            ]
+          }
+        },
+        "review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "transcription_status",
+            "target_mapping_status",
+            "anchor_status",
+            "notes"
+          ],
+          "properties": {
+            "transcription_status": {
+              "enum": [
+                "pending",
+                "checked",
+                "verified"
+              ]
+            },
+            "target_mapping_status": {
+              "enum": [
+                "pending",
+                "mapped",
+                "verified",
+                "not_applicable"
+              ]
+            },
+            "anchor_status": {
+              "enum": [
+                "pending",
+                "passed",
+                "failed",
+                "not_applicable"
+              ]
+            },
+            "notes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_id",
+        "start_offset",
+        "end_offset",
+        "offset_unit",
+        "anchor_text",
+        "occurrence",
+        "context_before",
+        "context_after"
+      ],
+      "properties": {
+        "text_id": {
+          "type": "string"
+        },
+        "start_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_offset": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offset_unit": {
+          "const": "utf16_code_unit"
+        },
+        "anchor_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_before": {
+          "type": "string"
+        },
+        "context_after": {
+          "type": "string"
+        }
+      }
+    },
+    "displayEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "target_ref_id",
+        "display_order",
+        "entry_role"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string"
+        },
+        "target_ref_id": {
+          "type": "string"
+        },
+        "display_order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "entry_role": {
+          "enum": [
+            "sentence_note",
+            "word_note",
+            "phrase_note",
+            "paragraph_note",
+            "general_note",
+            "other"
+          ]
+        }
+      }
+    },
+    "displayGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "display_group_id",
+        "anchor_mode",
+        "anchors",
+        "section_id",
+        "entries",
+        "render_policy",
+        "notes"
+      ],
+      "properties": {
+        "display_group_id": {
+          "type": "string"
+        },
+        "anchor_mode": {
+          "enum": [
+            "inline",
+            "section"
+          ]
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/anchor"
+          }
+        },
+        "section_id": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/displayEntry"
+          }
+        },
+        "render_policy": {
+          "const": "combine_in_order"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_status",
+        "source_verified",
+        "transcription_checked",
+        "target_mapping_checked",
+        "offsets_validated",
+        "display_groups_checked",
+        "unresolved_items_count",
+        "notes"
+      ],
+      "properties": {
+        "package_status": {
+          "enum": [
+            "draft",
+            "reviewed",
+            "ready_for_import"
+          ]
+        },
+        "source_verified": {
+          "type": "boolean"
+        },
+        "transcription_checked": {
+          "type": "boolean"
+        },
+        "target_mapping_checked": {
+          "type": "boolean"
+        },
+        "offsets_validated": {
+          "type": "boolean"
+        },
+        "display_groups_checked": {
+          "type": "boolean"
+        },
+        "unresolved_items_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "1.0.0",
+  "work": {
+    "work_id": "sample",
+    "title": "合成测试篇",
+    "canonical_title": "合成测试篇",
+    "parent_work": null,
+    "language": "zh",
+    "script": "mixed"
+  },
+  "edition": {
+    "edition_id": "sample-a",
+    "display_name": "测试甲注",
+    "author": {
+      "name": "测试者",
+      "period": null
+    },
+    "source_title": "合成样例",
+    "edition_kind": "commentary_edition",
+    "structure_policy": "reading_base",
+    "coverage": {
+      "type": "full_work",
+      "description": "两章"
+    },
+    "notes": []
+  },
+  "sources": [],
+  "layers": [
+    {
+      "layer_id": "modern",
+      "layer_type": "translation",
+      "display_name": "今译",
+      "based_on_layer_id": "base",
+      "author": { "name": "样例整理者", "period": null },
+      "work_title": null,
+      "order": 3
+    },
+    {
+      "layer_id": "base",
+      "layer_type": "base_text",
+      "display_name": "原文",
+      "based_on_layer_id": null,
+      "author": {
+        "name": "测试者",
+        "period": null
+      },
+      "work_title": null,
+      "order": 0
+    },
+    {
+      "layer_id": "a",
+      "layer_type": "commentary",
+      "display_name": "注",
+      "based_on_layer_id": "base",
+      "author": {
+        "name": "测试者",
+        "period": null
+      },
+      "work_title": null,
+      "order": 1
+    },
+    {
+      "layer_id": "b",
+      "layer_type": "subcommentary",
+      "display_name": "疏",
+      "based_on_layer_id": "a",
+      "author": {
+        "name": "测试者",
+        "period": null
+      },
+      "work_title": null,
+      "order": 2
+    }
+  ],
+  "structure": {
+    "sections": [
+      {
+        "section_id": "c1",
+        "parent_section_id": null,
+        "order": 1,
+        "label": null,
+        "title": "第一章",
+        "source_locator": {}
+      },
+      {
+        "section_id": "c2",
+        "parent_section_id": null,
+        "order": 2,
+        "label": null,
+        "title": "第二章",
+        "source_locator": {}
+      }
+    ]
+  },
+  "text_units": [
+    {
+      "text_id": "u1",
+      "section_id": "c1",
+      "layer_id": "base",
+      "sequence": 1,
+      "role": "classic_text",
+      "text": "甲乙。𠀀甲乙。丙丁。",
+      "source_id": null,
+      "source_locator": {},
+      "transcription_status": "transcribed",
+      "notes": []
+    },
+    {
+      "text_id": "u2",
+      "section_id": "c2",
+      "layer_id": "base",
+      "sequence": 1,
+      "role": "classic_text",
+      "text": "戊己。",
+      "source_id": null,
+      "source_locator": {},
+      "transcription_status": "transcribed",
+      "notes": []
+    },
+    {
+      "text_id": "tr1",
+      "section_id": "c1",
+      "layer_id": "modern",
+      "sequence": 2,
+      "role": "translation",
+      "text": "甲与乙。𠀀、甲与乙。丙与丁。",
+      "source_id": null,
+      "source_locator": {},
+      "transcription_status": "pending",
+      "notes": ["本次整理今译"]
+    },
+    {
+      "text_id": "tr2",
+      "section_id": "c2",
+      "layer_id": "modern",
+      "sequence": 2,
+      "role": "translation",
+      "text": "戊与己。",
+      "source_id": null,
+      "source_locator": {},
+      "transcription_status": "pending",
+      "notes": ["本次整理今译"]
+    }
+  ],
+  "annotations": [
+    {
+      "annotation_id": "a",
+      "layer_id": "a",
+      "annotation_type": "commentary",
+      "author": {
+        "name": "测试者",
+        "period": null
+      },
+      "work_title": null,
+      "text": "此注解释相邻两句。",
+      "source_id": null,
+      "source_locator": {},
+      "target_refs": [
+        {
+          "target_ref_id": "r",
+          "target_kind": "text_span",
+          "text_id": "u1",
+          "start_offset": 5,
+          "end_offset": 11,
+          "offset_unit": "utf16_code_unit",
+          "occurrence": 1,
+          "context_before": "𠀀",
+          "context_after": "",
+          "quoted_text": "甲乙。丙丁。"
+        }
+      ],
+      "review": {
+        "transcription_status": "pending",
+        "target_mapping_status": "mapped",
+        "anchor_status": "passed",
+        "notes": []
+      }
+    },
+    {
+      "annotation_id": "b",
+      "layer_id": "b",
+      "annotation_type": "subcommentary",
+      "author": {
+        "name": "测试者",
+        "period": null
+      },
+      "work_title": null,
+      "text": "此疏解释前注。",
+      "source_id": null,
+      "source_locator": {},
+      "target_refs": [
+        {
+          "target_ref_id": "r",
+          "target_kind": "annotation",
+          "annotation_id": "a",
+          "quoted_text": null
+        }
+      ],
+      "review": {
+        "transcription_status": "pending",
+        "target_mapping_status": "mapped",
+        "anchor_status": "passed",
+        "notes": []
+      }
+    }
+  ],
+  "display_groups": [
+    {
+      "display_group_id": "ordered",
+      "anchor_mode": "inline",
+      "anchors": [
+        {
+          "text_id": "u1",
+          "start_offset": 5,
+          "end_offset": 8,
+          "offset_unit": "utf16_code_unit",
+          "anchor_text": "甲乙。",
+          "occurrence": 2,
+          "context_before": "𠀀",
+          "context_after": "丙"
+        }
+      ],
+      "section_id": null,
+      "entries": [
+        {
+          "annotation_id": "b",
+          "target_ref_id": "r",
+          "display_order": 2,
+          "entry_role": "phrase_note"
+        },
+        {
+          "annotation_id": "a",
+          "target_ref_id": "r",
+          "display_order": 1,
+          "entry_role": "phrase_note"
+        }
+      ],
+      "render_policy": "combine_in_order",
+      "notes": []
+    },
+    {
+      "display_group_id": "across",
+      "anchor_mode": "inline",
+      "anchors": [
+        {
+          "text_id": "u1",
+          "start_offset": 5,
+          "end_offset": 11,
+          "offset_unit": "utf16_code_unit",
+          "anchor_text": "甲乙。丙丁。",
+          "occurrence": 1,
+          "context_before": "𠀀",
+          "context_after": ""
+        }
+      ],
+      "section_id": null,
+      "entries": [
+        {
+          "annotation_id": "a",
+          "target_ref_id": "r",
+          "display_order": 1,
+          "entry_role": "phrase_note"
+        }
+      ],
+      "render_policy": "combine_in_order",
+      "notes": []
+    }
+  ],
+  "validation": {
+    "package_status": "draft",
+    "source_verified": false,
+    "transcription_checked": false,
+    "target_mapping_checked": true,
+    "offsets_validated": true,
+    "display_groups_checked": true,
+    "unresolved_items_count": 0,
+    "notes": []
+  }
+}

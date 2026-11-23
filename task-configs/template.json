@@ -1,0 +1,13 @@
+{
+  "work_title": "填写经典名称",
+  "edition_title": "填写所据注本",
+  "tradition": "依实际材料填写",
+  "base_witness": null,
+  "commentary_witness": null,
+  "scope": "说明全书或节选的起讫",
+  "structure": "记录所据版本的层级和章法",
+  "special_instructions": [],
+  "unresolved": [
+    "补齐具体版本及可核验的卷页、图像或转录来源"
+  ]
+}

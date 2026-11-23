@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.1.0",
+  "data_version": "1.0.0",
+  "work": {
+    "work_id": "replace-work",
+    "title": "填写书名",
+    "canonical_title": "填写通行书名",
+    "parent_work": null,
+    "language": "zh",
+    "script": "unknown"
+  },
+  "edition": {
+    "edition_id": "replace-edition",
+    "display_name": "填写注本名称",
+    "author": {
+      "name": "",
+      "period": null
+    },
+    "source_title": "",
+    "edition_kind": "commentary_edition",
+    "structure_policy": "edition_original",
+    "coverage": {
+      "type": "partial",
+      "description": "填写实际起讫"
+    },
+    "notes": []
+  },
+  "sources": [],
+  "layers": [
+    {
+      "layer_id": "base",
+      "layer_type": "base_text",
+      "display_name": "原文",
+      "based_on_layer_id": null,
+      "author": {
+        "name": "",
+        "period": null
+      },
+      "work_title": null,
+      "order": 0
+    }
+  ],
+  "structure": {
+    "sections": []
+  },
+  "text_units": [],
+  "annotations": [],
+  "display_groups": [],
+  "validation": {
+    "package_status": "draft",
+    "source_verified": false,
+    "transcription_checked": false,
+    "target_mapping_checked": false,
+    "offsets_validated": false,
+    "display_groups_checked": false,
+    "unresolved_items_count": 0,
+    "notes": []
+  },
+  "ai_translations": []
+}

@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.1.0",
+  "data_version": "1.0.0",
+  "work": {
+    "work_id": "xi-xue",
+    "title": "习学二则（合成示例）",
+    "canonical_title": "习学二则",
+    "parent_work": null,
+    "language": "zh",
+    "script": "simplified"
+  },
+  "edition": {
+    "edition_id": "bian-zhu",
+    "display_name": "示例编注",
+    "author": {
+      "name": "示例编者",
+      "period": null
+    },
+    "source_title": "本包自拟例文",
+    "edition_kind": "commentary_edition",
+    "structure_policy": "edition_original",
+    "coverage": {
+      "type": "full_work",
+      "description": "自拟两则，示范按章整理；全部古文、注文均为合成材料。"
+    },
+    "notes": []
+  },
+  "sources": [
+    {
+      "source_id": "demo",
+      "source_title": "本包自拟例文",
+      "source_type": "other",
+      "editor": null,
+      "publisher": null,
+      "publication_year": null,
+      "edition_statement": "v1.1 合成夹具",
+      "locator": {},
+      "url": null,
+      "access_date": null,
+      "rights_note": null
+    }
+  ],
+  "layers": [
+    {
+      "layer_id": "base",
+      "layer_type": "base_text",
+      "display_name": "原文",
+      "based_on_layer_id": null,
+      "author": {
+        "name": "",
+        "period": null
+      },
+      "work_title": null,
+      "order": 0
+    },
+    {
+      "layer_id": "a",
+      "layer_type": "commentary",
+      "display_name": "注",
+      "based_on_layer_id": "base",
+      "author": {
+        "name": "示例编者",
+        "period": null
+      },
+      "work_title": null,
+      "order": 1
+    }
+  ],
+  "structure": {
+    "sections": [
+      {
+        "section_id": "c1",
+        "parent_section_id": null,
+        "order": 1,
+        "label": null,
+        "title": "问学",
+        "source_locator": {}
+      },
+      {
+        "section_id": "c2",
+        "parent_section_id": null,
+        "order": 2,
+        "label": null,
+        "title": "践履",
+        "source_locator": {}
+      }
+    ]
+  },
+  "text_units": [
+    {
+      "text_id": "unit-1",
+      "section_id": "c1",
+      "layer_id": "base",
+      "sequence": 1,
+      "role": "classic_text",
+      "text": "有疑则问。",
+      "source_id": "demo",
+      "source_locator": {
+        "paragraph": "1"
+      },
+      "transcription_status": "transcribed",
+      "notes": []
+    },
+    {
+      "text_id": "unit-2",
+      "section_id": "c1",
+      "layer_id": "base",
+      "sequence": 2,
+      "role": "classic_text",
+      "text": "既问，复思其义。",
+      "source_id": "demo",
+      "source_locator": {
+        "paragraph": "2"
+      },
+      "transcription_status": "transcribed",
+      "notes": []
+    },
+    {
+      "text_id": "unit-3",
+      "section_id": "c2",
+      "layer_id": "base",
+      "sequence": 1,
+      "role": "classic_text",
+      "text": "知之而未行，所知未固也。",
+      "source_id": "demo",
+      "source_locator": {
+        "paragraph": "3"
+      },
+      "transcription_status": "transcribed",
+      "notes": []
+    }
+  ],
+  "annotations": [
+    {
+      "annotation_id": "note1",
+      "layer_id": "a",
+      "annotation_type": "commentary",
+      "author": {
+        "name": "示例编者",
+        "period": null
+      },
+      "work_title": null,
+      "text": "复，再也。",
+      "source_id": "demo",
+      "source_locator": {},
+      "target_refs": [
+        {
+          "target_ref_id": "ref1",
+          "target_kind": "text_span",
+          "text_id": "unit-2",
+          "start_offset": 3,
+          "end_offset": 4,
+          "offset_unit": "utf16_code_unit",
+          "occurrence": 1,
+          "context_before": "既问，",
+          "context_after": "思其义。",
+          "quoted_text": "复"
+        }
+      ],
+      "review": {
+        "transcription_status": "pending",
+        "target_mapping_status": "mapped",
+        "anchor_status": "passed",
+        "notes": []
+      }
+    }
+  ],
+  "display_groups": [
+    {
+      "display_group_id": "word1",
+      "anchor_mode": "inline",
+      "anchors": [
+        {
+          "text_id": "unit-2",
+          "start_offset": 3,
+          "end_offset": 4,
+          "offset_unit": "utf16_code_unit",
+          "occurrence": 1,
+          "context_before": "既问，",
+          "context_after": "思其义。",
+          "anchor_text": "复"
+        }
+      ],
+      "section_id": null,
+      "entries": [
+        {
+          "annotation_id": "note1",
+          "target_ref_id": "ref1",
+          "display_order": 1,
+          "entry_role": "word_note"
+        }
+      ],
+      "render_policy": "combine_in_order",
+      "notes": []
+    }
+  ],
+  "validation": {
+    "package_status": "draft",
+    "source_verified": false,
+    "transcription_checked": false,
+    "target_mapping_checked": false,
+    "offsets_validated": false,
+    "display_groups_checked": false,
+    "unresolved_items_count": 0,
+    "notes": []
+  },
+  "ai_translations": [
+    {
+      "section_id": "c1",
+      "source_units": [
+        {
+          "text_id": "unit-1",
+          "source_text": "有疑则问。"
+        },
+        {
+          "text_id": "unit-2",
+          "source_text": "既问，复思其义。"
+        }
+      ],
+      "text": "有疑问就去请教。问过之后，再想一想其中的意思。",
+      "generator": {
+        "provider": "OpenAI",
+        "model": "GPT-6"
+      },
+      "generation_status": "generated",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "section_id": "c2",
+      "source_units": [
+        {
+          "text_id": "unit-3",
+          "source_text": "知之而未行，所知未固也。"
+        }
+      ],
+      "text": "懂得了一个道理，却还没有亲自去做，这道理就还没有掌握牢固。",
+      "generator": {
+        "provider": "OpenAI",
+        "model": "GPT-6"
+      },
+      "generation_status": "generated",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      }
+    }
+  ]
+}

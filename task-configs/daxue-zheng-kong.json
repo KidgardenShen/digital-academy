@@ -1,0 +1,11 @@
+{
+  "work_title": "礼记·大学第四十二",
+  "edition_title": "礼记正义卷六十",
+  "tradition": "郑玄注、孔颖达等正义",
+  "base_witness": "https://zh.wikisource.org/w/index.php?oldid=2000874&title=%E7%A6%AE%E8%A8%98%E6%AD%A3%E7%BE%A9%2F60",
+  "commentary_witness": "同卷电子转录",
+  "scope": "篇题解说及大学全篇，自大学之道至以义为利也",
+  "structure": "依礼记旧次。篇题独列，正文依义分为八个阅读单元，题名为整理者所加。",
+  "special_instructions": ["区分释经与疏注，随文音义另列。格物、辟、命等处今译参照本版注疏。"],
+  "unresolved": ["据书影复校经注分界、异字及疏中残讹。"]
+}

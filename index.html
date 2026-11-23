@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f6ef">
+  <title>经典研读室 · 一坐两忘</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <header class="mast"><div class="mast-inner"><a class="brand" href="#shelf"><span class="seal" aria-hidden="true">研</span>一坐两忘<span class="mast-divider">/</span><span class="room">经典研读室</span></a><span class="local">本地书房</span></div></header>
+  <main id="app" aria-label="经典研读室"><p>正在打开书架…</p></main>
+  <input id="file" type="file" accept=".json,application/json" hidden>
+  <div id="status" role="status" aria-live="polite"></div>
+  <dialog aria-labelledby="popup-title" id="popup"><header><h2 id="popup-title">经注对读</h2><button type="button" id="close">关闭</button></header><div id="popup-body"></div></dialog>
+  <script type="module" src="/src/app.mjs"></script>
+</body>
+</html>
