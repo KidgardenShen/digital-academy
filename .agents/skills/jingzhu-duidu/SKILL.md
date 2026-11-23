@@ -5,6 +5,8 @@ description: 将中国经典的指定底本和注疏整理为独立注本 JSON�
 
 # 经注对读 · 编辑工作流程 v1.1
 
+本文件为网站工作区的过渡制作说明。完整流程及数据规范由 jingzhu-duidu 的 `SKILL.md` 维护。
+
 ## 确定这次整理什么
 
 从项目根目录读取 [DATA_CONTRACT](../../../standards/DATA_CONTRACT.md) 和[标注规则](../../../standards/ANNOTATION_RULES.md)。字段和导入条件由契约与 Schema 维护。选择与委托匹配的 [任务配置](../../../task-configs/)，或复制其中的 `template.json`。记录原典底本、注疏底本、版本、责任者、全书或节选的范围，以及本次特有的章法。具体书目规则只适用于所选任务。先核实书影、卷页或可靠转录的出处，区分亲见与转引。缺材料时标明缺项及可交付范围。

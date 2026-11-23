@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://yizuoliangwang.example/schemas/edition.schema.json",
+  "$comment": "jingzhu-duidu 数据契约 1.1.0（兼容 1.0.0）。digital-academy 使用此 Schema 的过渡副本。",
   "title": "一坐两忘经典注疏版本数据",
   "type": "object",
   "additionalProperties": false,
@@ -88,7 +89,7 @@
     }
   },
   "$defs": {
-    "nonblank": { "type": "string", "pattern": "\\S" },
+    "nonblank": { "type": "string", "pattern": "[^\\u0009-\\u000d\\u0020\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff]" },
     "aiTranslation": {
       "type": "object",
       "additionalProperties": false,
@@ -446,7 +447,7 @@
       }
     },
     "textUnit": {
-      "$comment": "新制及重制文件的今译使用 role=translation，与经文同章并关联 translation 层。跨记录的交付检查见 DATA_CONTRACT.md。",
+      "$comment": "role=translation 用于文献译文。1.1.0 的章节 AI 今译存于顶层 ai_translations。",
       "type": "object",
       "additionalProperties": false,
       "required": [

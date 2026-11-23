@@ -1,4 +1,6 @@
-# 经典注疏 JSON 数据契约 v1.1
+# 经典注疏 JSON 数据契约 1.1.0（网站兼容摘要）
+
+规范原件由 jingzhu-duidu 维护，见其 `docs/一坐两忘_经典数据导入规范_v1.1.md`。本目录的 Schema 与合成样例为上游发布前的同步副本。`pnpm test:parity` 检查副本内容及两个校验器的普通、交付结果。
 
 一份 UTF-8 JSON 保存一个注疏版本的一次修订，可独立导入空书架。网站、制作者和命令行使用同一份 [JSON Schema](edition.schema.json) 与[语义校验器](../src/validate.mjs)。Schema 定义字段、类型、必填项和枚举值。本契约定义跨字段含义与导入行为。文献整理的方法见[编辑工作流程](../.agents/skills/jingzhu-duidu/SKILL.md)。
 

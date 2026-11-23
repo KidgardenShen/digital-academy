@@ -5,3 +5,6 @@ dist/
 # 本机整理的注本及标准仓库的发行包
 /editions/
 /jingzhu-duidu-v*.zip
+
+# 上游发布前的独立工作区，接入正式子模块时移除此行
+/standards/jingzhu-duidu/
