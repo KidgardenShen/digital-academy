@@ -45,3 +45,6 @@ AI 记录不分配用于锚点的文献文字或注文 ID。原典、历史注�
 - 新制或重制使用 1.1.0。由旧数据另存新修订，保存原有文献记录，新增独立今译；若经核实旧单元就是 AI 译文，逐条迁移并复查依赖该单元的引用。
 - 普通校验使用 `node scripts/validate.mjs <文件路径>`。新制或重制交付使用 `node scripts/validate.mjs --for-delivery <文件路径>`。1.1.0 交付须为每个含非空经文的章节（含篇首）提供已生成、无待修订结论的 AI 今译。待人工复核可以交付，须保留真实状态。1.0.0 的交付检查仍按同章非空译文及译文层核验。
 - [v1.0 旧样本](fixtures/edition.json)、[v1.1 两章示例](fixtures/ai-chapters.json)和[填写模板](../templates/edition.json)可配合[测试说明](../docs/V1.1_TESTS.md)使用。
+
+## 1.2.0
+每个注本以 canonical_ref.file、canonical_ref.locator_version 引用同一经典的 {work_id}__canonical.json。独立定位文件保存章节、单元、可选句段与修订号。各版原文和 UTF-16 偏移独立。alignment_refs 支持一对一、拆分、合并、部分对应、缺文和待核；数组可为空。verified 必须记录实际人工 reviewer。定位改版须重新校验受影响映射。详见 work.schema.json、edition.schema.json 与 fixtures/composite.json。历史数据沿用原契约与版本键。

@@ -38,3 +38,7 @@ pnpm exec vite preview --host 127.0.0.1 --port 4174 --strictPort
 - [制作用 Skill](.agents/skills/jingzhu-duidu/SKILL.md) 与 [完整合成样例](standards/fixtures/edition.json)
 
 src/validate.mjs 负责文件校验，src/storage.mjs 负责上架与版本冲突，src/reader.mjs 负责章节、对齐和点击命中，src/app.mjs 连接页面操作。
+
+冻结的 1.2.0 标准通过离线校验器验收。将注本及其定位文件放在同一目录，执行 node scripts/validate.mjs --for-delivery 注本.json。设置 JINGZHU_STANDARD 为对应上游检出目录后运行 pnpm test:parity。生产阅读器的升级另行发布。
+
+本次同步的上游提交为 [8394b17](https://github.com/KidgardenShen/jingzhu-duidu/commit/8394b17f74bda387207a6af3886fd67520df56a4)。定位文件独立于注本内容修订，书架键仍为 work_id、edition_id、data_version。

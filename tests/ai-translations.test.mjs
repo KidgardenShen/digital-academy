@@ -17,7 +17,7 @@ test('1.0.0 沿用旧结构，1.1.0 明示 AI 数组，未知版本报错', asyn
   const p = fresh();
   delete p.ai_translations;
   assert.throws(() => validateEdition(p), /ai_translations/);
-  p.schema_version = '1.2.0';
+  p.schema_version = '2.0.0';
   assert.throws(() => validateEdition(p), /schema_version/);
 });
 
