@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.2.0",
+  "work_id": "xi-xue",
+  "locator_version": "1.0.0",
+  "title": "习学二则（合成示例）",
+  "canonical_structure": {
+    "sections": [
+      {
+        "canonical_section_id": "sec",
+        "parent_id": null,
+        "order": 1,
+        "title": "合成章",
+        "units": [
+          {
+            "canonical_unit_id": "p1",
+            "order": 1,
+            "role": "classic_text"
+          },
+          {
+            "canonical_unit_id": "p2",
+            "order": 2,
+            "role": "classic_text"
+          }
+        ]
+      }
+    ]
+  }
+}

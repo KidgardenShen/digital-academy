@@ -1,3 +1,4 @@
+import { checkAlignment } from './alignment.mjs';
 import Ajv from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import schema from '../standards/edition.schema.json' with { type: 'json' };
@@ -79,7 +80,10 @@ function checkAiTranslations(pkg, units, sections) {
   }
 }
 
-export function validateEdition(pkg) {
+export function validateEdition(pkg, work) {
+  if (pkg?.schema_version === '1.2.0' && work === undefined) {
+    fail('/schema_version', '1.2.0 校验需要经典定位文件');
+  }
   if (!checkShape(pkg)) {
     const e = checkShape.errors[0];
     const field = e.params.missingProperty ?? e.params.additionalProperty;
@@ -96,7 +100,7 @@ export function validateEdition(pkg) {
 
   if (!pkg.work.title.trim()) fail('/work/title', '书名为空');
   if (!pkg.edition.display_name.trim()) fail('/edition/display_name', '注本名称为空');
-  if (!pkg.text_units.some(u => u.role !== 'translation' && u.text.trim())) fail('/text_units', '缺少可阅读原文');
+  if (!pkg.text_units.some(u => (pkg.schema_version === '1.2.0' ? u.role === 'classic_text' : u.role !== 'translation') && u.text.trim())) fail('/text_units', '缺少可阅读原文');
 
   function checkMetadata(item, path) {
     resolve(layers, item.layer_id, path + '/layer_id');
@@ -107,7 +111,8 @@ export function validateEdition(pkg) {
     checkMetadata(u, path);
     if (u.section_id !== null) resolve(sections, u.section_id, path + '/section_id');
   });
-  if (pkg.schema_version === '1.1.0') checkAiTranslations(pkg, units, sections);
+  if (pkg.schema_version === '1.2.0') checkAlignment(pkg, work, units, checkSpan);
+  if (pkg.schema_version !== '1.0.0') checkAiTranslations(pkg, units, sections);
   pkg.annotations.forEach((n, i) => {
     const path = '/annotations/' + i;
     checkMetadata(n, path);
@@ -132,9 +137,20 @@ export function validateEdition(pkg) {
     g.anchors.forEach((a, j) => {
       const p = path + '/anchors/' + j;
       const unit = resolve(units, a.text_id, p + '/text_id');
-      if (unit.role === 'translation') fail(p + '/text_id', '入口应位于原文');
+      if (unit.role === 'translation' || (pkg.schema_version === '1.2.0' && unit.role !== 'classic_text')) fail(p + '/text_id', '入口应位于原文');
       checkSpan(unit.text, a, a.anchor_text, p);
     });
+    if (pkg.schema_version === '1.2.0') {
+      const ids = new Set();
+      let lastSentence = -Infinity, firstWord = Infinity;
+      for (const entry of g.entries) {
+        if (ids.has(entry.annotation_id)) fail(path, '同组注文重复');
+        ids.add(entry.annotation_id);
+        if (entry.entry_role === 'sentence_note') lastSentence = Math.max(lastSentence, entry.display_order);
+        if (entry.entry_role === 'word_note') firstWord = Math.min(firstWord, entry.display_order);
+      }
+      if (lastSentence >= firstWord) fail(path, '句注须先于词注');
+    }
     const orders = new Set();
     g.entries.forEach((e, j) => {
       const p = path + '/entries/' + j;
@@ -144,6 +160,22 @@ export function validateEdition(pkg) {
       orders.add(e.display_order);
     });
   });
+  if (pkg.schema_version === '1.2.0' && pkg.validation.package_status === 'ready_for_import') {
+    for (const key of ['source_verified', 'transcription_checked', 'target_mapping_checked', 'offsets_validated', 'display_groups_checked']) {
+      if (!pkg.validation[key]) fail('/validation/' + key, '入架校核未完成');
+    }
+    if (pkg.validation.unresolved_items_count !== 0) fail('/validation', '尚有待核事项');
+    for (const unit of pkg.text_units) {
+      if (unit.transcription_status !== 'verified') fail('/text_units/' + unit.text_id, '转录待核');
+    }
+    for (const note of pkg.annotations) {
+      if (!note.source_id || !note.target_refs.length || note.review.transcription_status !== 'verified'
+          || !['verified', 'not_applicable'].includes(note.review.target_mapping_status)
+          || !['passed', 'not_applicable'].includes(note.review.anchor_status)) {
+        fail('/annotations/' + note.annotation_id, '注文校核未完成');
+      }
+    }
+  }
   return pkg;
 }
 
